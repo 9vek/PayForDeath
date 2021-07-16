@@ -1,9 +1,11 @@
 # PayForDeath
  a minecraft spigot plugin add death penalty feature to the server
 
+spigotmc release: [PayForDeath | SpigotMC - High Performance Minecraft](https://www.spigotmc.org/resources/payfordeath.94328/)
 
+MCBBS release: [[机制\]蛋挞君的死亡赎金——让玩家花钱赎回死亡掉落的等级和物品吧！[1.12-1.17] - 服务端插件 - Minecraft(我的世界)中文论坛 - (mcbbs.net)](https://www.mcbbs.net/thread-1213517-1-1.html)
 
-**[ INTRODUCTION ]**
+## **[ INTRODUCTION ]**
 
 Many death penalty plugins are either too heavy or outdated, and Kevyn's PayForDeath is a lightweight death penalty plugin base on Vault's money system.
 
@@ -17,7 +19,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 
 
-**[ FEATURES ]**
+## **[ FEATURES ]**
 
 - You can set how much a player needs to pay to keep his levels and items
 - Configure kept content: item, level, or both
@@ -29,7 +31,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 - Give each world a different configuration
 - Read the configuration file for more details (sorry no English comment yet, please wait)
 
-**[ INSTALLATION ]**
+## **[ INSTALLATION ]**
 
 - Need Vault + one any economy plugin.
 - Please fully test before use. If you encounter any problem, please give me feedback
