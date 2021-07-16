@@ -3,7 +3,7 @@
 
 spigotmc release: [PayForDeath | SpigotMC - High Performance Minecraft](https://www.spigotmc.org/resources/payfordeath.94328/)
 
-MCBBS release: [[机制\]蛋挞君的死亡赎金——让玩家花钱赎回死亡掉落的等级和物品吧！[1.12-1.17] - 服务端插件 - Minecraft(我的世界)中文论坛 - (mcbbs.net)](https://www.mcbbs.net/thread-1213517-1-1.html)
+MCBBS release: [\[[机制\]蛋挞君的死亡赎金——让玩家花钱赎回死亡掉落的等级和物品吧！[1.12-1.17]](https://www.mcbbs.net/thread-1213517-1-1.html)
 
 ## **[ INTRODUCTION ]**
 
