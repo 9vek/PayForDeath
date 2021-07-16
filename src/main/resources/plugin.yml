@@ -1,0 +1,11 @@
+name: PayForDeath
+version: ${project.version}
+main: cn.kevyn.payfordeath.PayForDeath
+api-version: 1.17
+authors: [ kevyn ]
+description: let your players pay for keeping inventory and level when death
+website: kevyn.cn
+commands:
+  pfd:
+    description: PayForDeath's commands
+    usage: /pfd reload | ...

@@ -1,0 +1,112 @@
+# 启用本插件的世界
+enabled-worlds:
+  - world
+  - anotherWorld
+
+# 下面的设置根据不同的世界生效
+# 世界名设置为你自己的世界名即可
+# 每一项设置都可以写在这里【覆盖】默认设置
+# 所有可填写的配置,以及对应的注释，见下方【default】
+
+# 一些例子
+# 主世界免费死亡不掉落
+exampleMainWorld:
+  keep-inventory: true
+  keep-level: true
+  notice-by-action-bar: true
+  kept-message: §l§9主世界免费死亡不掉落哦！
+
+# 无法通过扣钱赎回的世界
+exampleDangerWorld:
+  # 因为默认配置中keep各项本来就是false
+  # 此处可以不写
+  notice-by-action-bar: true
+  # 这里为什么不是unkept-message呢？
+  # 因为玩家并非钱不够导致的死亡掉落，
+  # 而是这个世界本身所有keep项都为false（继承自default）
+  kept-message: §l§c这个世界花钱赎回也是没用的！
+
+
+# 扣你钱又不还给你东西的世界
+# 这个太蠢了
+exampleStupidWorld:
+  deduct-by-amount: true
+  base-amount: 100
+  notice-by-action-bar: true
+  kept-message: §l§d扣钱是对你死掉的惩罚，东西就不还了哈
+  unkept-message: §l§d你没钱扣，算你走运
+
+
+# 固定数额扣钱的世界，且清除代替掉落
+exampleWorld:
+  deduct-by-amount: true
+  base-amount: 100
+  level-increase-amount: 10
+  max-amount: -1
+  # 这个世界死亡没钱的话物品会直接消失，不会掉到地上
+  clear-instead-of-drop: true
+  keep-inventory: true
+  keep-level: true
+  notice-by-action-bar: true
+
+
+# 根据比例扣钱的世界
+exampleWorld2:
+  deduct-by-percent: true
+  base-percent: 10
+  level-increase-percent: 1
+  max-percent: 100
+  keep-inventory: true
+  keep-level: true
+  notice-by-action-bar: true
+
+
+# 默认配置
+# 如果你配置的世界缺失某一项，将读取这里的值
+default:
+  # 注意：两种扣钱模式你可以都打开
+  # 可以组合出一些更定制化的扣钱方式
+  # 比如基础金额固定，等级累加比例，或者基础比例固定，等级累加金额
+  # 但这样会让扣除的金钱数量非常难以计算，谨慎使用。
+  # 如果你同时设置了最大扣除数量和最大扣除比例，实际计算中，取其中低的那个作为扣除上限。
+  # 如果两种扣钱模式都关闭，则相当于打开了免费的死亡不掉落
+
+  # 启用按照固定数额扣钱的模式
+  # 此项为true时下面三条配置才会生效
+  deduct-by-amount: false
+  # 基础金额
+  base-amount: 0
+  # 等级累加金额
+  level-increase-amount: 0
+  # 封顶金额， -1为关闭这项检测
+  max-amount: -1
+
+  # 启用按照比例扣钱的方式
+  # 此项为true时下面三条配置才会生效
+  deduct-by-percent: false
+  # 基础比例
+  base-percent: 0
+  # 等级累加比例
+  level-increase-percent: 0
+  # 最大比例，-1为关闭这项检测
+  max-percent: -1
+
+  # 如果玩家的钱足够，保留什么？
+  # 默认全关，相当于关闭了这个插件
+  # 保存物品栏
+  keep-inventory: false
+  # 保存等级：
+  keep-level: false
+
+  # 此项为true，如果玩家无法赎回物品，物品也不会掉落！！
+  clear-instead-of-drop: false
+
+  # 通知方式
+  # action bar 通知：
+  notice-by-action-bar: false
+  # 常规聊天式通知
+  notice-by-message: false
+
+  # 消息
+  kept-message: §l§b已上缴 §e%s §b元赎金，物品和等级保住了。
+  unkept-message: §l§c不足 §e%s §c元赎金，物品和等级已丢失。
