@@ -31,7 +31,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 - Configure kept content: item, level, or both
 
-- calculate ransom by a **fixed amount**, or a **percent**, or a **combination of the two**
+- Calculate ransom by a **fixed amount**, or a **percent**, or a **combination of the two**
 
 - The amount of money can increase with the **player's level**
 
@@ -41,7 +41,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 - Switch **on / off** or give a **different configuration** to each world
 
-- **exempt** (free to keep all) or **ignore** (disable this plugin on) a player **[new!]**
+- **Exempt** (free to keep all) or **ignore** (disable this plugin on) a player **[new!]**
 
 - Read the configuration file for more details (sorry no English-comment version in the jar, you can find a English version below)
 
