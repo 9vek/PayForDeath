@@ -6,7 +6,7 @@ public class PFDInfo {
 
     private Player player;
     private String deathWorldName;
-    private boolean kept;
+    private String status;
     private double ransom;
 
     public Player getPlayer() {
@@ -17,12 +17,12 @@ public class PFDInfo {
         this.player = player;
     }
 
-    public boolean isKept() {
-        return kept;
+    public String getStatus() {
+        return status;
     }
 
-    public void setKept(boolean kept) {
-        this.kept = kept;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public double getRansom() {

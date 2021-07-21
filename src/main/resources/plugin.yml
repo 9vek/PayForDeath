@@ -1,8 +1,8 @@
 name: PayForDeath
 version: ${project.version}
 main: cn.kevyn.payfordeath.PayForDeath
-api-version: 1.17
-authors: [ kevyn ]
+api-version: 1.13
+author: kevyn
 description: let your players pay for keeping inventory and level when death
 website: kevyn.cn
 commands:

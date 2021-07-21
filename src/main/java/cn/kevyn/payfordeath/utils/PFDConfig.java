@@ -24,7 +24,8 @@ public class PFDConfig {
             "notice-by-action-bar",
             "notice-by-message",
             "kept-message",
-            "unkept-message"
+            "unkept-message",
+            "exempt-message"
     };
 
     public PFDConfig(String worldName, PayForDeath pfd) {

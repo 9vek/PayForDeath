@@ -110,3 +110,4 @@ default:
   # 消息
   kept-message: §l§b已上缴 §e%s §b元赎金，物品和等级保住了。
   unkept-message: §l§c不足 §e%s §c元赎金，物品和等级已丢失。
+  exempt-message: §l§e你在这个世界拥有无偿保留物品和等级的特权！
