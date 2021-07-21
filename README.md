@@ -99,7 +99,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
     keep-inventory: true
     keep-level: true
     notice-by-action-bar: true
-    Keep message: §l§9Keeping items and levels is free in the main world :D
+    kept-message: §l§9Keeping items and levels is free in the main world :D
   
   
   # danger world
