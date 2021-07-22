@@ -1,27 +1,20 @@
-# 默认配置
-# 如果你配置的世界缺失某一项，将读取这里的值
 default:
-  enable: true
-
-  # 扣钱公式
-  deduct-formula: 100 + 10*[lv]
-  # 上限公式
-  upper-limit-formula: 0.8*[bal]
-
-  # 保存物品栏
+  enable: false
+  deduct-formula: 0
+  upper-limit-formula: -1
   keep-inventory: false
-  # 保存等级：
   keep-level: false
-
-  # 此项为true，如果玩家无法赎回，东西消失而不是掉落！！
   clear-instead-of-drop: false
-
-  # action bar 通知：
   notice-by-action-bar: false
-  # 常规聊天式通知
-  notice-by-message: false
-
-  # 消息
-  kept-message: §l§b已上缴 §e%s §b元赎金，物品和等级保住了。
-  unkept-message: §l§c不足 §e%s §c元赎金，物品和等级已丢失。
+  notice-by-console: false
+  kept-message: §l§bHi §e[player]§b, you have paid $§e[ransom]§b，your inventory and levels kept。now you have $§e[new-balance]
+  unkept-message: §l§cHi §e[player]§b, you didn't have $§e[ransom]§b，your inventory and levels lost in [death-world]。
   exempt-message: §l§e你在这个世界拥有无偿保留物品和等级的特权！
+
+exampleWorld:
+  enable: true
+  deduct-formula: 10 + 10*[lv]
+  upper-limit-formula: 10 + 0.5*[bal]
+  keep-inventory: true
+  keep-level: true
+  notice-by-action-bar: true

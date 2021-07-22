@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PFDListener implements Listener {
 
@@ -67,7 +68,10 @@ public class PFDListener implements Listener {
 
             String upperLimitFormula = config.getString("upper-limit-formula");
             double max = StringFormula.calculate(upperLimitFormula, pfdBean);
-            ransom = ransom < max ? ransom : max;
+
+            if(max >= 0) {
+                ransom = ransom < max ? ransom : max;
+            }
 
             pfdBean.setRansom(ransom);
 
@@ -109,45 +113,41 @@ public class PFDListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         PFDBean pfdBean = PFDBean.get(player);
-        String worldName = pfdBean.getDeathWorldName();
 
         if (pfdBean == null) {
             return;
         }
 
-        ConfigurationSection config = pfdBean.getConfig();
-        double ransom = pfdBean.getRansom();
-        String message;
-
-        switch (pfdBean.getStatus()) {
-            case "kept":
-                message = config.getString("kept-message").replace("%s", String.format("%.2f", ransom));
-                break;
-            case "unkept":
-                message = config.getString("unkept-message").replace("%s", String.format("%.2f", ransom));
-                break;
-            case "exempt":
-                message = config.getString("exempt-message");
-                break;
-            default:
-                message = null;
-        }
-
-        if (message != null ) {
-            sendToPlayer(player, config, message);
-        }
+        noticePlayer(pfdBean);
 
         PFDBean.remove(pfdBean);
 
     }
 
-    private void sendToPlayer(Player player, ConfigurationSection config, String message) {
+    private void noticePlayer(PFDBean pfdBean) {
+
+        Player player = pfdBean.getPlayer();
+        ConfigurationSection config = pfdBean.getConfig();
+        String playerName = player.getName();
+        String deathWorld = pfdBean.getDeathWorldName();
+        String respawnWorld = player.getWorld().getName();
+        String oldBalance = String.format("%.2f", pfdBean.getBalance());
+        String ransom = String.format("%.2f",pfdBean.getRansom());
+        String newBalance = String.format("%.2f", PayForDeath.INSTANCE.getEconomy().getBalance(player));
+
+        String message = config.getString(pfdBean.getStatus()+"-message");
+        message = message.replace("[player]", playerName)
+                .replace("[death-world]", deathWorld)
+                .replace("respawn-world", respawnWorld)
+                .replace("[old-balance]", oldBalance)
+                .replace("[ransom]", ransom)
+                .replace("[new-balance]", newBalance);
 
         if (config.getBoolean("notice-by-action-bar")) {
             TextComponent textComponent = new TextComponent(message);
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, textComponent);
         }
-        if (config.getBoolean("notice-by-message")) {
+        if (config.getBoolean("notice-by-console")) {
             player.sendMessage(message);
         }
 
