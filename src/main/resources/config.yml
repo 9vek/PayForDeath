@@ -1,20 +1,46 @@
 default:
   enable: false
   deduct-formula: 0
+  # -1 to close this check
   upper-limit-formula: -1
   keep-inventory: false
   keep-level: false
   clear-instead-of-drop: false
   notice-by-action-bar: false
   notice-by-console: false
-  kept-message: §l§bHi §e[player]§b, u paid $§e[ransom]§b, ur inventory and levels kept。now u have $§e[new-balance]
-  unkept-message: §l§cHi §e[player]§c, u didn't have $§e[ransom]§c, ur inventory and levels lost in [death-world]。
-  exempt-message: §l§e你在这个世界拥有无偿保留物品和等级的特权！
+  # placeholder you can use:
+  # [player] : the player's name
+  # [death-world] : the world the player death
+  # [respawn-world] : the world the player respawn
+  # [ransom] : the money deducted
+  # [old-balance] : the player's balance before the deduction
+  # [new-balance] : the player's balance after the deduction
+  kept-message: §l§byou paid §e$[ransom]§b, inventory and levels kept。now u have §e$[new-balance] §9^_^
+  unkept-message: §l§cyou didn't have $§e[ransom]§c, inventory and levels lost in §e[death-world] §9x_x
+  exempt-message: §l§eyou have the privilege to keep items and levels for free in §e[death-world] §9^_^
 
-exampleWorld:
+# write your world-specific config below
+# just write the settings you want to override in this world
+# missing settings will read from default
+exampleResourceWorld:
   enable: true
   deduct-formula: 10 + 10*[lv]
   upper-limit-formula: 10 + 0.5*[bal]
   keep-inventory: true
   keep-level: true
   notice-by-action-bar: true
+
+exampleMainWorld:
+  enable: true
+  deduct-formula: 0
+  keep-inventory: true
+  keep-level: true
+  notice-by-action-bar: true
+  kept-message: §l§bFree to keep all things in main world §9^_^
+
+exampleDangerWorld:
+  enable: true
+  keep-inventory: false
+  keep-level: false
+  notice-by-action-bar: true
+  kept-message: §l§cpay for death is not allowed in this world §9c_c
