@@ -7,8 +7,8 @@ default:
   clear-instead-of-drop: false
   notice-by-action-bar: false
   notice-by-console: false
-  kept-message: §l§bHi §e[player]§b, you have paid $§e[ransom]§b，your inventory and levels kept。now you have $§e[new-balance]
-  unkept-message: §l§cHi §e[player]§b, you didn't have $§e[ransom]§b，your inventory and levels lost in [death-world]。
+  kept-message: §l§bHi §e[player]§b, u paid $§e[ransom]§b, ur inventory and levels kept。now u have $§e[new-balance]
+  unkept-message: §l§cHi §e[player]§c, u didn't have $§e[ransom]§c, ur inventory and levels lost in [death-world]。
   exempt-message: §l§e你在这个世界拥有无偿保留物品和等级的特权！
 
 exampleWorld:
