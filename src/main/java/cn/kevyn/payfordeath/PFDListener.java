@@ -1,14 +1,12 @@
 package cn.kevyn.payfordeath;
 
-import cn.kevyn.payfordeath.utils.PFDConfig;
-import cn.kevyn.payfordeath.utils.PFDInfo;
+import cn.kevyn.payfordeath.utils.PFDBean;
+import cn.kevyn.payfordeath.utils.StringFormula;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,83 +18,65 @@ import java.util.List;
 
 public class PFDListener implements Listener {
 
-    private PayForDeath pfd;
-    private Economy economy;
-    private Permission permissions;
-    private List<String> enabledWorlds;
-    private List<PFDInfo> pfdPlayerList;
-    private List<PFDConfig> pfdConfigList;
+    public static PFDListener INSTANCE;
 
-    public PFDListener(PayForDeath pfd) {
-        this.pfd = pfd;
-        economy = pfd.getEconomy();
-        permissions = pfd.getPermissions();
-        enabledWorlds = new ArrayList<>();
-        pfdPlayerList = new ArrayList<>();
-        pfdConfigList = new ArrayList<>();
-        loadConfig();
+    private Economy economy;
+    private Permission permission;
+
+    public PFDListener() {
+        PFDListener.INSTANCE = this;
+        economy = PayForDeath.INSTANCE.getEconomy();
+        permission = PayForDeath.INSTANCE.getPermissions();
     }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
 
         Player player = event.getEntity();
-        String worldName = player.getWorld().getName();
+        PFDBean pfdBean = new PFDBean();
+        pfdBean.setPlayer(player);
 
-        PFDInfo pfdInfo = new PFDInfo();
-        pfdInfo.setPlayer(player);
-        pfdInfo.setDeathWorldName(worldName);
+        ConfigurationSection config = pfdBean.getConfig();
+        String worldName = pfdBean.getDeathWorldName();
+        double balance = pfdBean.getBalance();
 
-        if (!enabledWorlds.contains(worldName)) {
+        if (!config.getBoolean("enable")) {
             return;
         }
 
-        if (permissions != null) {
+        if (permission != null) {
 
-            if (permissions.has(player, "pfd.ignore."+worldName)) {
-                pfdInfo.setStatus("ignore");
+            if (permission.has(player, "pfd.ignore." + worldName)) {
+                pfdBean.setStatus("ignore");
             }
 
-            else if (permissions.has(player, "pfd.exempt."+worldName)) {
+            else if (permission.has(player, "pfd.exempt." + worldName)) {
                 event.setKeepInventory(true);
                 event.setKeepLevel(true);
                 event.getDrops().clear();
                 event.setDroppedExp(0);
-                pfdInfo.setStatus("exempt");
+                pfdBean.setStatus("exempt");
             }
 
         }
 
-        if (pfdInfo.getStatus() == null) {
-            ConfigurationSection config = getConfig(worldName);
-            double balance = economy.getBalance(player);
-            double ransom = 0;
+        if (pfdBean.getStatus() == null) {
 
-            if (config.getBoolean("deduct-by-amount")) {
-                ransom += config.getDouble("base-amount");
-                ransom += config.getDouble("level-increase-amount") * player.getLevel();
-            }
+            String deductFormula = config.getString("deduct-formula");
+            double ransom = StringFormula.calculate(deductFormula, pfdBean);
 
-            if (config.getBoolean("deduct-by-percent")) {
-                double percent = (config.getDouble("base-percent")/100 + config.getDouble("level-increase-percent")/100 * player.getLevel());
-                ransom += percent * balance;
-            }
+            String upperLimitFormula = config.getString("upper-limit-formula");
+            double max = StringFormula.calculate(upperLimitFormula, pfdBean);
+            ransom = ransom < max ? ransom : max;
 
-            if (config.getBoolean("deduct-by-amount") && ransom > config.getDouble("max-amount") && config.getDouble("max-amount") != -1) {
-                ransom = config.getDouble("max-amount");
-            }
-
-            if (config.getBoolean("deduct-by-percent") && ransom / balance > config.getDouble("max-percent")/100 && config.getDouble("max-percent") != -1) {
-                ransom = balance * (config.getDouble("max-percent")/100);
-            }
-
-            pfdInfo.setRansom(ransom);
+            pfdBean.setRansom(ransom);
 
             if (balance >= ransom || ransom == 0) {
 
                 if (config.getBoolean("keep-inventory")) {
                     event.setKeepInventory(true);
                 }
+
                 if (config.getBoolean("keep-level")) {
                     event.setKeepLevel(true);
                 }
@@ -104,37 +84,42 @@ public class PFDListener implements Listener {
                 economy.withdrawPlayer(player, ransom);
                 event.getDrops().clear();
                 event.setDroppedExp(0);
-                pfdInfo.setStatus("kept");
+                pfdBean.setStatus("kept");
+
             }
             else {
+
                 event.setKeepInventory(false);
                 event.setKeepLevel(false);
-                pfdInfo.setStatus("unkept");
+                pfdBean.setStatus("unkept");
+
                 if (config.getBoolean("clear-instead-of-drop")) {
                     event.getDrops().clear();
                     event.setDroppedExp(0);
                 }
+
             }
         }
 
-        pfdPlayerList.add(pfdInfo);
+        PFDBean.add(pfdBean);
 
     }
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        PFDInfo pfdInfo = checkPlayerList(player);
+        PFDBean pfdBean = PFDBean.get(player);
+        String worldName = pfdBean.getDeathWorldName();
 
-        if (pfdInfo == null) {
+        if (pfdBean == null) {
             return;
         }
 
-        ConfigurationSection config = getConfig(pfdInfo.getDeathWorldName());
-        double ransom = pfdInfo.getRansom();
+        ConfigurationSection config = pfdBean.getConfig();
+        double ransom = pfdBean.getRansom();
         String message;
 
-        switch (pfdInfo.getStatus()) {
+        switch (pfdBean.getStatus()) {
             case "kept":
                 message = config.getString("kept-message").replace("%s", String.format("%.2f", ransom));
                 break;
@@ -152,35 +137,8 @@ public class PFDListener implements Listener {
             sendToPlayer(player, config, message);
         }
 
-        pfdPlayerList.remove(pfdInfo);
+        PFDBean.remove(pfdBean);
 
-    }
-
-    public PFDInfo checkPlayerList(Player player) {
-        for (PFDInfo pfdInfo : pfdPlayerList) {
-            if (pfdInfo.getPlayer() == player){
-                return pfdInfo;
-            }
-        }
-        return null;
-    }
-
-    public void loadConfig() {
-        pfdConfigList.clear();
-        FileConfiguration config = pfd.getConfig();
-        enabledWorlds = config.getStringList("enabled-worlds");
-        for (String worldName : enabledWorlds) {
-            pfdConfigList.add(new PFDConfig(worldName, pfd));
-        }
-    }
-
-    public ConfigurationSection getConfig(String worldName) {
-        for (PFDConfig config : pfdConfigList) {
-            if (config.getWorldName().equals(worldName)) {
-                return config.getWorldConfig();
-            }
-        }
-        return null;
     }
 
     private void sendToPlayer(Player player, ConfigurationSection config, String message) {

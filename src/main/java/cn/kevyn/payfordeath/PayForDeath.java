@@ -1,5 +1,6 @@
 package cn.kevyn.payfordeath;
 
+import cn.kevyn.payfordeath.utils.ConfigHelper;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
@@ -8,25 +9,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PayForDeath extends JavaPlugin {
 
+    public static PayForDeath INSTANCE;
+
+    public PayForDeath() {
+        PayForDeath.INSTANCE = this;
+    }
+
     // 提示字符串
     public final String ENABLE = ChatColor.BLUE + "[PayForDeath] Enabled! ";
     public final String DISABLE = ChatColor.RED + "[PayForDeath] Disabled! ";
-    public final String RELOAD = ChatColor.GREEN + "[PayForDeath] Reloaded！";
+    public final String RELOAD = ChatColor.GREEN + "[PayForDeath] Config Loaded！";
 
-    // 经济管理实例，权限管理实例，监听器实例
+    private ConfigHelper configHelper;
     private Economy economy;
     private Permission permissions;
-    private PFDListener listener;
 
-    /**
-     * 启用插件
-     */
     @Override
     public void onEnable() {
         super.onEnable();
 
-        // 保存默认配置文件
-        saveDefaultConfig();
+        loadConfig();
 
         // 检查前置
         if (dependenciesReady()) {
@@ -42,37 +44,25 @@ public class PayForDeath extends JavaPlugin {
         }
 
         // 注册
-        this.listener = new PFDListener(this);
         this.getCommand("pfd").setExecutor(new PFDCommand());
-        this.getServer().getPluginManager().registerEvents(listener, this);
+        this.getServer().getPluginManager().registerEvents(new PFDListener(), this);
         this.getServer().getConsoleSender().sendMessage(ENABLE);
 
     }
 
-    /**
-     * 禁用插件
-     */
     @Override
     public void onDisable() {
         super.onDisable();
         this.getServer().getConsoleSender().sendMessage(DISABLE);
     }
 
-    /**
-     * 重载配置文件
-     */
-    public void reloadPlugin() {
+    public void loadConfig() {
+        saveDefaultConfig();
         reloadConfig();
-        listener.loadConfig();
+        configHelper = ConfigHelper.getInstance(getConfig(), true);
         getServer().getConsoleSender().sendMessage(RELOAD);
     }
 
-    /**
-     * 检查前置
-     * 一定要有经济提供者
-     * 没有权限提供者影响功能
-     * @return 不影响使用吗？
-     */
     private boolean dependenciesReady() {
 
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
@@ -104,6 +94,10 @@ public class PayForDeath extends JavaPlugin {
 
     public Permission getPermissions() {
         return permissions;
+    }
+
+    public ConfigHelper getConfigHelper() {
+        return configHelper;
     }
 
     public static void main(String[] args) {

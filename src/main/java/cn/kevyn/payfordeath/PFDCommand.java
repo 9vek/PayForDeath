@@ -14,7 +14,7 @@ public class PFDCommand implements CommandExecutor {
             return false;
 
         if (strings[0].equals("reload")) {
-            ((PayForDeath)commandSender.getServer().getPluginManager().getPlugin("PayForDeath")).reloadPlugin();
+            PayForDeath.INSTANCE.loadConfig();
             return true;
         }
 
