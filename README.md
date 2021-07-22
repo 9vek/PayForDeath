@@ -84,109 +84,53 @@ This provides an elegant way to increase the cost of death, at the same time, it
 - Configuration:
 
   ```yaml
-  # Enable worlds of this plugin
-  enabled-worlds:
-    - world
-    - anotherWorld
-    
-  # world-specific configuration sections:
-  # See the default configuration section below to know what settings can be written here. 
-  # Settings under each world name will override the default in that world.
-  
-  # Some examples
-  # Free death in the main world
-  exampleMainWorld:
-    keep-inventory: true
-    keep-level: true
-    notice-by-action-bar: true
-    kept-message: §l§9Keeping items and levels is free in the main world :D
-  
-  
-  # danger world
-  exampleDangerWorld:
-    # Because those keep-settings in default already have the value false
-    # You can just not write them here
-    notice-by-action-bar: true
-    # Why isn't this an unkept-message?
-    # Because players' unkept is not cause by their money lack
-    # It's beacause the setting. All keep-settings are false (inherited from default)
-    kept-message: §l§cThis world does not allow anyone pay to redeem items and levels T _ T
-  
-    
-  # Fixed amount deduction in this world, and clear instead of drop
-  exampleWorld1:
-    deduct-by-amount: true
-    base-amount: 100
-    level-increase-amount: 10
-    max-amount: -1
-    clear-instead-of-drop: true
-    keep-inventory: true
-    keep-level: true
-    notice-by-action-bar: true
-  
-  
-  # Proportional deduction in this world
-  exampleWorld2:
-    deduct-by-percent: true
-    base-percent: 10
-    level-increase-percent: 1
-    max-percent: 100
-    keep-inventory: true
-    keep-level: true
-    notice-by-action-bar: true
-    
-    
-  # Default configuration section
-  # If the world you configured is missing an setting, the default one will be read
   default:
-    # Note: you can turn on both deduction modes
-    # So you can combine some more customized ways to deduct money
-    # But this may make the amount of money deducted very difficult to calculate, 
-    # If you both set the maximum deduction amount and the maximum deduction percent 
-    # PayForDeath will take the lower one as the upper deduction limit.
-    # If both modes of deduction are turned off, it is equivalent to
-    # keep items and levels free of charge
-    
-    # deduct by fixed amount
-    # turn the first to true to let the following three take effect
-    deduct-by-amount: false
-    # Basic amount
-    base-amount: 0
-    # Level increase amount
-    level-increase-amount: 0
-    # Max amount, - 1 to turn off this check
-    max-amount: -1
-  
-    # deduct by percent (of player's balance)
-    # turn the first to true to let the following three take effect
-    deduct-by-percent: false
-    # Base percent
-    base-percent: 0
-    # Level increase percent
-    level-increase-percent: 0
-    # Max percent, - 1 to turn off this check
-    max-percent: -1
-    
-    # If the player has enough money, what to keep?
-    # All off by default, which is equivalent to disabling the plugin
+    enable: false
+    deduct-formula: 0
+    # -1 to close this check
+    upper-limit-formula: -1
     keep-inventory: false
     keep-level: false
-    
-    # If the player does NOT has enough money
-    # clear all items and exp without drop
     clear-instead-of-drop: false
-    
-    # Notification methods
-    # Action bar notification:
     notice-by-action-bar: false
-    # console chat notification
-    notice-by-message: false
-    
-    # default messages
-    kept-message: §l§bYou have paid §e%s §bcoins，items and levels kept ^_^
-    unkept-message: §l§cYou didn't have enough §e%s §ccoins，items and levels lost x _ x
-    exempt-message: §l§eYou have the privilege to keep items and levels for free in this world ^_^
+    notice-by-console: false
+    # placeholder you can use:
+    # [player] : the player's name
+    # [death-world] : the world the player death
+    # [respawn-world] : the world the player respawn
+    # [ransom] : the money deducted
+    # [old-balance] : the player's balance before the deduction
+    # [new-balance] : the player's balance after the deduction
+    kept-message: §l§byou paid §e$[ransom]§b, inventory and levels kept。now u have §e$[new-balance] §9^_^
+    unkept-message: §l§cyou didn't have $§e[ransom]§c, inventory and levels lost in §e[death-world] §9x_x
+    exempt-message: §l§eyou have the privilege to keep items and levels for free in §e[death-world] §9^_^
+  
+  # write your world-specific config below
+  # just write the settings you want to override in this world
+  # missing settings will read from default
+  exampleResourceWorld:
+    enable: true
+    deduct-formula: 10 + 10*[lv]
+    upper-limit-formula: 10 + 0.5*[bal]
+    keep-inventory: true
+    keep-level: true
+    notice-by-action-bar: true
+  
+  exampleMainWorld:
+    enable: true
+    deduct-formula: 0
+    keep-inventory: true
+    keep-level: true
+    notice-by-action-bar: true
+    kept-message: §l§bFree to keep all things in main world §9^_^
+  
+  exampleDangerWorld:
+    enable: true
+    keep-inventory: false
+    keep-level: false
+    notice-by-action-bar: true
+    kept-message: §l§cpay for death is not allowed in this world §9c_c
   ```
-
+  
   
 
