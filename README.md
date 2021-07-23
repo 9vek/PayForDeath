@@ -5,7 +5,7 @@ SpigotMC release: [PayForDeath | SpigotMC - High Performance Minecraft](https://
 
 MCBBS release: [\[机制\]蛋挞君的死亡赎金——让玩家花钱赎回死亡掉落的等级和物品吧！[1.12-1.17]](https://www.mcbbs.net/thread-1213517-1-1.html)
 
-## **[ INTRODUCTION ]**
+## INTRODUCTION
 
 Many death penalty plugins are either too heavy or outdated, and Kevyn's PayForDeath is a lightweight death penalty plugin base on Vault's money system.
 
@@ -25,7 +25,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 
 
-## **[ FEATURES ]**
+## FEATURES
 
 - You can set how much a player needs to pay to keep his levels and items
 
@@ -49,7 +49,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
   
 
-## **[ INSTALLATION ]**
+## INSTALLATION
 
 - Drag to plugins folder
 
@@ -70,9 +70,9 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
   
 
-## **[ USAGES ]**
+## USAGES
 
-- Command:
+- **Commands**:
 
   ```yaml
   # reload the plugin's config file
@@ -80,7 +80,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
   /pfd reload
   ```
 
-- Permissions:
+- **Permissions**:
 
   ```yaml
   # give it to player who you want to save items and levels completely free of charge
@@ -90,7 +90,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
   pfd.ignore.[worldName]
   ```
 
-- Configuration:
+- **Configuration**:
 
   ```yaml
   default:
