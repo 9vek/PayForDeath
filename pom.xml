@@ -6,7 +6,7 @@
 
     <groupId>cn.kevyn</groupId>
     <artifactId>PayForDeath</artifactId>
-    <version>2.2</version>
+    <version>2.5</version>
     <packaging>jar</packaging>
 
     <name>PayForDeath</name>

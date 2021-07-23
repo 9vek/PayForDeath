@@ -14,7 +14,7 @@ public class PFDCommand implements CommandExecutor {
             return false;
 
         if (strings[0].equals("reload")) {
-            PayForDeath.INSTANCE.loadConfig();
+            PayForDeath.INSTANCE.onReload();
             return true;
         }
 

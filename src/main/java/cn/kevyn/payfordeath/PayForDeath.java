@@ -15,7 +15,6 @@ public class PayForDeath extends JavaPlugin {
         PayForDeath.INSTANCE = this;
     }
 
-    // 提示字符串
     public final String ENABLE = ChatColor.BLUE + "[PayForDeath] Enabled! ";
     public final String DISABLE = ChatColor.RED + "[PayForDeath] Disabled! ";
     public final String RELOAD = ChatColor.GREEN + "[PayForDeath] Config Loaded！";
@@ -28,12 +27,11 @@ public class PayForDeath extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
 
-        loadConfig();
+        saveDefaultConfig();
+        configHelper = ConfigHelper.getInstance(getConfig(), true);
 
-        // 检查前置
         if (dependenciesReady()) {
 
-            // 如果权限提供者不存在，不影响使用，但影响功能
             if (permissions == null) {
                 getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] Permissions Provider Not Found" );
             }
@@ -43,7 +41,6 @@ public class PayForDeath extends JavaPlugin {
             return;
         }
 
-        // 注册
         this.getCommand("pfd").setExecutor(new PFDCommand());
         this.getServer().getPluginManager().registerEvents(new PFDListener(), this);
         this.getServer().getConsoleSender().sendMessage(ENABLE);
@@ -56,8 +53,7 @@ public class PayForDeath extends JavaPlugin {
         this.getServer().getConsoleSender().sendMessage(DISABLE);
     }
 
-    public void loadConfig() {
-        saveDefaultConfig();
+    public void onReload() {
         reloadConfig();
         configHelper = ConfigHelper.getInstance(getConfig(), true);
         getServer().getConsoleSender().sendMessage(RELOAD);
