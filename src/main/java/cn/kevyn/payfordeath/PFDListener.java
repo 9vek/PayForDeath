@@ -125,7 +125,6 @@ public class PFDListener implements Listener {
     }
 
     private void noticePlayer(PFDBean pfdBean) {
-
         Player player = pfdBean.getPlayer();
         ConfigurationSection config = pfdBean.getConfig();
         String playerName = player.getName();
