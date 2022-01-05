@@ -54,11 +54,9 @@ public class ConfigHelper {
             ConfigurationSection defaultSection = getSection("default");
             Set<String> defaultKeys = defaultSection.getKeys(true);
             for (String key : defaultKeys) {
-
                 if (section.get(key) == null) {
                     section.set(key, defaultSection.get(key));
                 }
-
             }
 
         }

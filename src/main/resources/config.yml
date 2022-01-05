@@ -25,6 +25,7 @@ default:
   kept-message: §l§byou paid §e$[ransom]§b, inventory and levels kept。now u have §e$[new-balance] §9^_^
   unkept-message: §l§cyou didn't have §e$[ransom]§c, inventory and levels lost in §e[death-world] §9x_x
   exempt-message: §l§eyou have the privilege to keep items and levels for free in §e[death-world] §9^_^
+  ignore-message: §l§7PFD's features are disabled on you
 
 # write your world-specific config below
 # just write the settings you want to override in this world

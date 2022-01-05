@@ -31,12 +31,11 @@ public class PayForDeath extends JavaPlugin {
         configHelper = ConfigHelper.getInstance(getConfig(), true);
 
         if (dependenciesReady()) {
-
             if (permissions == null) {
                 getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] Permissions Provider Not Found" );
             }
-
-        } else {
+        } 
+        else {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }

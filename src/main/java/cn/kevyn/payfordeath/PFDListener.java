@@ -13,10 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 public class PFDListener implements Listener {
 
     public static PFDListener INSTANCE;
@@ -47,11 +43,11 @@ public class PFDListener implements Listener {
 
         if (permission != null) {
 
-            if (permission.has(player, "pfd.ignore." + worldName)) {
+            if (permission.has(player, "pfd.ignore." + worldName) || permission.has(player, "pfd.ignore.*")) {
                 pfdBean.setStatus("ignore");
             }
 
-            else if (permission.has(player, "pfd.exempt." + worldName)) {
+            else if (permission.has(player, "pfd.exempt." + worldName) || permission.has(player, "pfd.exempt.*")) {
                 event.setKeepInventory(true);
                 event.setKeepLevel(true);
                 event.getDrops().clear();
@@ -69,7 +65,7 @@ public class PFDListener implements Listener {
             String upperLimitFormula = config.getString("upper-limit-formula");
             double max = StringFormula.calculate(upperLimitFormula, pfdBean);
 
-            if(max >= 0) {
+            if (max >= 0) {
                 ransom = ransom < max ? ransom : max;
             }
 
@@ -90,8 +86,7 @@ public class PFDListener implements Listener {
                 event.setDroppedExp(0);
                 pfdBean.setStatus("kept");
 
-            }
-            else {
+            } else {
 
                 event.setKeepInventory(false);
                 event.setKeepLevel(false);
@@ -131,10 +126,12 @@ public class PFDListener implements Listener {
         String deathWorld = pfdBean.getDeathWorldName();
         String respawnWorld = player.getWorld().getName();
         String oldBalance = String.format("%.2f", pfdBean.getBalance());
-        String ransom = String.format("%.2f",pfdBean.getRansom());
+        String ransom = String.format("%.2f", pfdBean.getRansom());
         String newBalance = String.format("%.2f", PayForDeath.INSTANCE.getEconomy().getBalance(player));
-
-        String message = config.getString(pfdBean.getStatus()+"-message");
+        String message = config.getString(pfdBean.getStatus() + "-message");
+        if (message == null) {
+            message = "";
+        } 
         message = message.replace("[player]", playerName)
                 .replace("[death-world]", deathWorld)
                 .replace("respawn-world", respawnWorld)
@@ -153,4 +150,3 @@ public class PFDListener implements Listener {
     }
 
 }
-
