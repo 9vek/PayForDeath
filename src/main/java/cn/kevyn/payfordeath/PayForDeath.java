@@ -17,7 +17,7 @@ public class PayForDeath extends JavaPlugin {
 
     public final String ENABLE = ChatColor.BLUE + "[PayForDeath] Enabled! ";
     public final String DISABLE = ChatColor.RED + "[PayForDeath] Disabled! ";
-    public final String RELOAD = ChatColor.GREEN + "[PayForDeath] Config Loaded！";
+    public final String RELOAD = ChatColor.GREEN + "[PayForDeath] Config Reloaded! ";
 
     private ConfigHelper configHelper;
     private Economy economy;
@@ -32,7 +32,7 @@ public class PayForDeath extends JavaPlugin {
 
         if (dependenciesReady()) {
             if (permissions == null) {
-                getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] Permissions Provider Not Found" );
+                getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] Permissions provider not found" );
             }
         } 
         else {
@@ -68,12 +68,14 @@ public class PayForDeath extends JavaPlugin {
         RegisteredServiceProvider<Permission> rspp = getServer().getServicesManager().getRegistration(Permission.class);
 
         if (rspe == null) {
+            getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] Economy provider is required but not found" );
             return false;
         }
 
         economy = rspe.getProvider();
 
         if (economy == null) {
+            getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] Economy provider is required but not found" );
             return false;
         }
 
