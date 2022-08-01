@@ -31,7 +31,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 - Configure kept content: item, level, or both
 
-- Calculate ransom by a Formula you write **<new!>**
+- Calculate ransom by a Formula you write
 
 - The amount of money can increase with the **player's level** or the **player's balance**
 
@@ -41,7 +41,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 - Give a **different configuration** to each world
 
-- **Exempt** (free to keep all) or **ignore** (disable this plugin on) a player **<new!>**
+- **Exempt** (free to keep all) or **ignore** (disable this plugin on) a player
 
 - Messages now support some placeholders **<new!>**
 
@@ -77,7 +77,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
   ```yaml
   # reload the plugin's config file
   # you can only use it in console
-  /pfd reload
+  /pfd-reload
   ```
 
 - **Permissions**:
