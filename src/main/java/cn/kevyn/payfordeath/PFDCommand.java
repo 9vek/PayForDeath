@@ -10,10 +10,7 @@ public class PFDCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        if (strings.length == 0)
-            return false;
-
-        if (strings[0].equals("reload")) {
+        if (command.getName().equals("pfd-reload")) {
             PayForDeath.INSTANCE.onReload();
             return true;
         }

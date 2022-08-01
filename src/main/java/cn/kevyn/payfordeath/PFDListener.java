@@ -63,10 +63,15 @@ public class PFDListener implements Listener {
             double ransom = StringFormula.calculate(deductFormula, pfdBean);
 
             String upperLimitFormula = config.getString("upper-limit-formula");
-            double max = StringFormula.calculate(upperLimitFormula, pfdBean);
 
-            if (max >= 0) {
-                ransom = ransom < max ? ransom : max;
+            if (!upperLimitFormula.equals("-1")) {
+
+                double max = StringFormula.calculate(upperLimitFormula, pfdBean);
+
+                if (max >= 0) {
+                    ransom = ransom < max ? ransom : max;
+                }
+
             }
 
             pfdBean.setRansom(ransom);
@@ -75,15 +80,15 @@ public class PFDListener implements Listener {
 
                 if (config.getBoolean("keep-inventory")) {
                     event.setKeepInventory(true);
+                    event.getDrops().clear();
                 }
 
                 if (config.getBoolean("keep-level")) {
                     event.setKeepLevel(true);
+                    event.setDroppedExp(0);
                 }
 
                 economy.withdrawPlayer(player, ransom);
-                event.getDrops().clear();
-                event.setDroppedExp(0);
                 pfdBean.setStatus("kept");
 
             } else {
@@ -132,12 +137,12 @@ public class PFDListener implements Listener {
         if (message == null) {
             message = "";
         } 
-        message = message.replace("[player]", playerName)
-                .replace("[death-world]", deathWorld)
-                .replace("respawn-world", respawnWorld)
-                .replace("[old-balance]", oldBalance)
-                .replace("[ransom]", ransom)
-                .replace("[new-balance]", newBalance);
+        message = message.replace("<player>", playerName)
+                .replace("<death-world>", deathWorld)
+                .replace("<respawn-world>", respawnWorld)
+                .replace("<old-balance>", oldBalance)
+                .replace("<ransom>", ransom)
+                .replace("<new-balance>", newBalance);
 
         if (config.getBoolean("notice-by-action-bar")) {
             TextComponent textComponent = new TextComponent(message);

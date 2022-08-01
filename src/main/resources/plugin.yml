@@ -1,15 +1,20 @@
 name: PayForDeath
 version: ${project.version}
 main: cn.kevyn.payfordeath.PayForDeath
-api-version: 1.13
+api-version: 1.18
 author: kevyn
 description: let your players pay for keeping inventory and level when death
 depend: [Vault]
 website: kevyn.cn
-commands:
-  pfd:
-    description: PayForDeath's commands
-    usage: /pfd reload | ...
 permissions:
+  pfd.reload:
+    default: op
   pfd.ignore.*:
     default: false
+  pfd.exempt.*:
+    default: false
+commands:
+  pfd-reload:
+    description: PayForDeath's reload command
+    permission: pfd.reload
+  

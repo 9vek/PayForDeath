@@ -1,9 +1,9 @@
 # PayForDeath
  a minecraft spigot plugin that add death penalty feature to the server
 
-SpigotMC release: [PayForDeath | SpigotMC - High Performance Minecraft](https://www.spigotmc.org/resources/payfordeath.94328/)
+SpigotMC release: <PayForDeath | SpigotMC - High Performance Minecraft>(https://www.spigotmc.org/resources/payfordeath.94328/)
 
-MCBBS release: [\[机制\]蛋挞君的死亡赎金——让玩家花钱赎回死亡掉落的等级和物品吧！[1.12-1.17]](https://www.mcbbs.net/thread-1213517-1-1.html)
+MCBBS release: <\<机制\>蛋挞君的死亡赎金——让玩家花钱赎回死亡掉落的等级和物品吧！<1.12-1.17>>(https://www.mcbbs.net/thread-1213517-1-1.html)
 
 ## INTRODUCTION
 
@@ -13,15 +13,15 @@ The main feature is very simple: **Players must have enough money to avoid dropp
 
 This provides an elegant way to increase the cost of death, at the same time, it can enrich the economic system of your server, so that the player's money can be used for one more purpose.
 
-![[IMG]](screenshots/screenshot0.png)
+!<<IMG>>(screenshots/screenshot0.png)
 
-![[IMG]](screenshots/screenshot1.png)
+!<<IMG>>(screenshots/screenshot1.png)
 
-![[IMG]](screenshots/screenshot2.png)
+!<<IMG>>(screenshots/screenshot2.png)
 
-![[IMG]](screenshots/screenshot3.png)
+!<<IMG>>(screenshots/screenshot3.png)
 
-![[IMG]](screenshots/screenshot4.png)
+!<<IMG>>(screenshots/screenshot4.png)
 
 
 
@@ -31,7 +31,7 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 - Configure kept content: item, level, or both
 
-- Calculate ransom by a Formula you write **[new!]**
+- Calculate ransom by a Formula you write **<new!>**
 
 - The amount of money can increase with the **player's level** or the **player's balance**
 
@@ -41,9 +41,9 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 - Give a **different configuration** to each world
 
-- **Exempt** (free to keep all) or **ignore** (disable this plugin on) a player **[new!]**
+- **Exempt** (free to keep all) or **ignore** (disable this plugin on) a player **<new!>**
 
-- Messages now support some placeholders **[new!]**
+- Messages now support some placeholders **<new!>**
 
 - Read the configuration file for more details (sorry no English-comment version in the jar, you can find a English version below)
 
@@ -84,10 +84,10 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
   ```yaml
   # give it to player who you want to save items and levels completely free of charge
-  pfd.exempt.[worldName]
+  pfd.exempt.<worldName>
   
   # give it to player who you want to disable this plugin's features on
-  pfd.ignore.[worldName]
+  pfd.ignore.<worldName>
   ```
 
 - **Configuration**:
@@ -98,10 +98,10 @@ This provides an elegant way to increase the cost of death, at the same time, it
     # formulas
     # supported operations: + - * / ()
     # placeholders you can use:
-    # [lv] : the player's level
-    # [bal] : the player's balance
+    # <lv> : the player's level
+    # <bal> : the player's balance
     # invalid formula will always return 0.0
-    # see the [exampleResourceWorld] below for an example
+    # see the <exampleResourceWorld> below for an example
     deduct-formula: 0
     # -1 to switch off this check
     upper-limit-formula: -1
@@ -111,23 +111,23 @@ This provides an elegant way to increase the cost of death, at the same time, it
     notice-by-action-bar: false
     notice-by-console: false
     # placeholders you can use in messages:
-    # [player] : the player's name
-    # [death-world] : the world the player death
-    # [respawn-world] : the world the player respawn
-    # [ransom] : the money deducted
-    # [old-balance] : the player's balance before the deduction
-    # [new-balance] : the player's balance after the deduction
-    kept-message: §l§byou paid §e$[ransom]§b, inventory and levels kept。now u have §e$[new-balance] §9^_^
-    unkept-message: §l§cyou didn't have §e$[ransom]§c, inventory and levels lost in §e[death-world] §9x_x
-    exempt-message: §l§eyou have the privilege to keep items and levels for free in §e[death-world] §9^_^
+    # <player> : the player's name
+    # <death-world> : the world the player death
+    # <respawn-world> : the world the player respawn
+    # <ransom> : the money deducted
+    # <old-balance> : the player's balance before the deduction
+    # <new-balance> : the player's balance after the deduction
+    kept-message: §l§byou paid §e$<ransom>§b, inventory and levels kept。now u have §e$<new-balance> §9^_^
+    unkept-message: §l§cyou didn't have §e$<ransom>§c, inventory and levels lost in §e<death-world> §9x_x
+    exempt-message: §l§eyou have the privilege to keep items and levels for free in §e<death-world> §9^_^
   
   # write your world-specific config below
   # just write the settings you want to override in this world
   # missing settings will read from default
   exampleResourceWorld:
     enable: true
-    deduct-formula: 10 + 10 * [lv]
-    upper-limit-formula: 10 + 0.5 * [bal]
+    deduct-formula: 10 + 10 * <lv>
+    upper-limit-formula: 10 + 0.5 * <bal>
     keep-inventory: true
     keep-level: true
     notice-by-action-bar: true

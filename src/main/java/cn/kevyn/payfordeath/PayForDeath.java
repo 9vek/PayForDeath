@@ -15,9 +15,9 @@ public class PayForDeath extends JavaPlugin {
         PayForDeath.INSTANCE = this;
     }
 
-    public final String ENABLE = ChatColor.BLUE + "[PayForDeath] Enabled! ";
-    public final String DISABLE = ChatColor.RED + "[PayForDeath] Disabled! ";
-    public final String RELOAD = ChatColor.GREEN + "[PayForDeath] Config Reloaded! ";
+    public final String ENABLE = "[PayForDeath]" + ChatColor.BLUE + " plugin is now enabled！";
+    public final String DISABLE = "[PayForDeath]" + ChatColor.RED + " plugin is now disabled！";
+    public final String RELOAD = "[PayForDeath]" + ChatColor.GREEN + " config is now successfully reloaded！";
 
     private ConfigHelper configHelper;
     private Economy economy;
@@ -32,7 +32,7 @@ public class PayForDeath extends JavaPlugin {
 
         if (dependenciesReady()) {
             if (permissions == null) {
-                getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] Permissions provider not found" );
+                getServer().getConsoleSender().sendMessage(ChatColor.RED + "[PayForDeath] permissions provider not found" );
             }
         } 
         else {
@@ -40,7 +40,7 @@ public class PayForDeath extends JavaPlugin {
             return;
         }
 
-        this.getCommand("pfd").setExecutor(new PFDCommand());
+        this.getCommand("pfd-reload").setExecutor(new PFDCommand());
         this.getServer().getPluginManager().registerEvents(new PFDListener(), this);
         this.getServer().getConsoleSender().sendMessage(ENABLE);
 

@@ -51,7 +51,7 @@ public class StringFormula {
     public static double calculate(String formula, PFDBean pfdBean) {
         String lv = pfdBean.getPlayer().getLevel()+"";
         String bal = pfdBean.getBalance()+"";
-        double ransom = getResult(formula.replace("[lv]", lv).replace("[bal]", bal));
+        double ransom = getResult(formula.replace("<lv>", lv).replace("<bal>", bal));
         return ransom > 0 ? ransom : 0;
     }
 
