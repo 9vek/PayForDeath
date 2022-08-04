@@ -13,7 +13,7 @@ The main feature is very simple: **Players must have enough money to avoid dropp
 
 This provides an elegant way to increase the cost of death, at the same time, it can enrich the economic system of your server, so that the player's money can be used for one more purpose.
 
-![[IMG]](screenshots/screenshot0.png)
+![IMG](screenshots/screenshot0.png)
 
 ![[IMG]](screenshots/screenshot1.png)
 
