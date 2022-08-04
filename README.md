@@ -15,13 +15,13 @@ This provides an elegant way to increase the cost of death, at the same time, it
 
 ![IMG](screenshots/screenshot0.png)
 
-![[IMG]](screenshots/screenshot1.png)
+![IMG](screenshots/screenshot1.png)
 
-![[IMG]](screenshots/screenshot2.png)
+![IMG](screenshots/screenshot2.png)
 
-![[IMG]](screenshots/screenshot3.png)
+![IMG](screenshots/screenshot3.png)
 
-![[IMG]](screenshots/screenshot4.png)
+![IMG](screenshots/screenshot4.png)
 
 
 
